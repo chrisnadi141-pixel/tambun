@@ -138,8 +138,8 @@ th,td{
   </div>
 
   <div class="header-right">
-    <div id="tanggalDisplay"></div>
-    <marquee><div id="hijriDisplay"></div></marquee>
+    <marquee><div id="tanggalDisplay"></div></marquee>
+    <div id="hijriDisplay"></div>
   </div>
 </div>
 <!-- HARI BESAR ISLAM -->
@@ -170,6 +170,7 @@ th,td{
 <div id="marqueeBox">
 <span id="marqueeText">
 Selamat datang di Masjid Jamie Al Muttaqin — Sholat tepat waktu lebih utama —
+Jadikan masjid sebagai rumah kedua kita — Semoga Allah memberkahi aktivitas kita —
 </span>
 </div>
 
@@ -180,13 +181,14 @@ Selamat datang di Masjid Jamie Al Muttaqin — Sholat tepat waktu lebih utama �
 setInterval(()=>{
   const n=new Date()
   jamDigital.textContent=
-  `${String(n.getHours()).padStart(2,0)}:${String(n.getMinutes()).padStart(2,0)}:${String(n.getSeconds()).padStart(2,0)}`
+  `${String(n.getHours()).padStart(2,0)}:${String(n.getMinutes()).padStart(2,0)}`
 },1000)
 
 /* TANGGAL & HIJRI */
 setInterval(()=>{
   const h=["Minggu","Senin","Selasa","Rabu","Kamis","Jumat","Sabtu"]
-  const b=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"]
+  const b=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus",
+               "September","Oktober","November","Desember"]
   const n=new Date()
   tanggalDisplay.textContent=`${h[n.getDay()]}, ${n.getDate()} ${b[n.getMonth()]} ${n.getFullYear()}`
   hijriDisplay.textContent=new Intl.DateTimeFormat(
