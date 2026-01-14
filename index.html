@@ -6,15 +6,7 @@
 <title>Display Jadwal Sholat - Masjid Jamie Al Muttaqin</title>
 
 <style>
-body{
-  margin:0;
-  padding:20px;
-  background:url("masjid2.jpg") no-repeat center center fixed;
-  background-size:cover;
-  color:white;
-  font-family:Arial, sans-serif;
-  text-shadow:1px 2px 4px rgba(0,0,0,.7);
-}
+
 
 /* HEADER */
 #headerTop{
@@ -63,32 +55,24 @@ body{
 #tanggalDisplay{font-size:1.5rem}
 #hijriDisplay{font-size:1.4rem;color:#ffd966}
 
+
+
+
 /* HARI BESAR */
 #hariBesarBox{
   background:rgba(0,0,0,.55);
-  padding:12px;
+  padding:12px 14px;
   border-radius:12px;
-  max-width:700px;
+  right: 20px;
+  max-width:500px;
   margin:10px auto;
-  font-size:1.4rem;
-  font-weight:700;
-  text-align:center;
+  font-size:1rem;
+  font-weight:600;
+  text-align:right;
   color:#ffd966;
 }
 
-/* INFO COUNTDOWN */
-#infoBox{
-  background:rgba(0,0,0,.45);
-  padding:20px;
-  border-radius:18px;
-  max-width:620px;
-  margin:15px auto;
-  text-align:center;
-}
-#countdown{
-  font-size:2rem;
-  font-weight:700;
-}
+
 
 /* TABLE */
 table{
@@ -122,6 +106,9 @@ th,td{
   to{transform:translateX(-100%)}
 }
 </style>
+<script src="data.js"></script>
+<link rel="stylesheet" href="style.css">
+
 </head>
 
 <body>
@@ -145,36 +132,92 @@ th,td{
 <!-- HARI BESAR ISLAM -->
 <div id="hariBesarBox">
   <span id="hariBesarText">Memuat hari besar Islam...</span>
-</div>
-<!-- COUNTDOWN SHOLAT -->
-<div id="infoBox">
-  <div id="countdown">Memuat waktu sholat...</div>
+ </div>
 </div>
 
-<!-- TABEL SHOLAT -->
-<table id="jadwalTable">
-<thead>
-<tr>
-<th>IMSAK</th>
-<th>SUBUH</th>
-<th>ZUHUR</th>
-<th>ASAR</th>
-<th>MAGHRIB</th>
-<th>ISYA</th>
-</tr>
-</thead>
-<tbody></tbody>
-</table>
+<!-- ================= JADWAL SHOLAT (BAWAH) ================= -->
+<div class="footer-text">
+ <div class="jadwal" id="jadwalTable">
+  <div class="box imsak">
+    <span>IMSAK</span>
+    <strong id="imsak">--:--</strong>
+  </div>
 
-<!-- RUNNING TEXT -->
-<div id="marqueeBox">
-<span id="marqueeText">
-Selamat datang di Masjid Jamie Al Muttaqin — Sholat tepat waktu lebih utama —
-Jadikan masjid sebagai rumah kedua kita — Semoga Allah memberkahi aktivitas kita —
-</span>
+  <div class="box subuh">
+    <span>SUBUH</span>
+    <strong id="subuh">--:--</strong>
+  </div>
+
+  <div class="box dzuhur">
+    <span>DZUHUR</span>
+    <strong id="dzuhur">--:--</strong>
+  </div>
+
+  <div class="box ashar">
+    <span>ASHAR</span>
+    <strong id="ashar">--:--</strong>
+  </div>
+
+  <div class="box maghrib">
+    <span>MAGHRIB</span>
+    <strong id="maghrib">--:--</strong>
+  </div>
+
+  <div class="box isya">
+    <span>ISYA</span>
+    <strong id="isya">--:--</strong>
+   </div>
+  </div>
 </div>
+<!-- ================= COUNTDOWN ================= -->
+<div class="countdown" id="countdown">Memuat...</div>
 
-<audio id="adzanAudio" src="adzan.mp3" preload="auto"></audio>
+<!-- ================= AUDIO ADZAN ================= -->
+<audio id="adzanAudio" src="adzan.mp3"></audio>
+
+<!-- ================= DATA SHOLAT ================= -->
+<script src="data.js"></script>
+
+<script>
+/* UPDATE JADWAL DARI data.js */
+const ids = ["imsak","subuh","dzuhur","ashar","maghrib","isya"];
+
+const updateJadwalHTML = () => {
+  if (!jadwal) return;
+  ids.forEach(id => {
+    document.getElementById(id).textContent = jadwal[id];
+  });
+};
+
+setInterval(updateJadwalHTML, 1000);
+
+/* JAM REALTIME */
+function updateJam() {
+  const now = new Date();
+  document.getElementById("jam").textContent =
+    now.toLocaleTimeString("id-ID", { hour12:false });
+}
+setInterval(updateJam, 1000);
+updateJam();
+
+/* TANGGAL */
+const now = new Date();
+
+document.getElementById("tanggal-masehi").textContent =
+  now.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+  });
+
+document.getElementById("tanggal-hijriah").textContent =
+  new Intl.DateTimeFormat(
+    "id-ID-u-ca-islamic-umalqura",
+    { day:"numeric", month:"long", year:"numeric" }
+  ).format(now);
+</script>
+
 
 <script>
 /* JAM */
@@ -191,10 +234,32 @@ setInterval(()=>{
                "September","Oktober","November","Desember"]
   const n=new Date()
   tanggalDisplay.textContent=`${h[n.getDay()]}, ${n.getDate()} ${b[n.getMonth()]} ${n.getFullYear()}`
-  hijriDisplay.textContent=new Intl.DateTimeFormat(
-    "id-ID-u-ca-islamic",{day:"numeric",month:"long",year:"numeric"}
-  ).format(n).replace("AH","H")
-},1000)
+const hijriMonths = [
+  "Muharram","Safar","Rabiul Awal","Rabiul Akhir",
+  "Jumadil Awal","Jumadil Akhir",
+  "Rajab","Syaban","Ramadhan",
+  "Syawal","Dzulqaidah","Dzulhijjah"
+];
+
+const d = new Date();
+
+const fmt = new Intl.DateTimeFormat(
+  'id-US-u-ca-islamic-umalqura',
+  { day:'numeric', month:'numeric', year:'numeric', weekday:'long' }
+);
+
+const parts = fmt.formatToParts(d);
+const day = parts.find(p=>p.type==='day').value;
+const month = parts.find(p=>p.type==='month').value;
+const year = parts.find(p=>p.type==='year').value;
+const weekday = parts.find(p=>p.type==='weekday').value;
+
+document.getElementById("hijriDisplay").innerHTML =
+  `${weekday}, ${day} ${hijriMonths[month-1]} ${year} H`;
+},1000)  
+
+
+
 /* HARI BESAR ISLAM */
 const hariBesar=[
   {n:"Isra Mi'raj Nabi (ﷺ)",m:1,d:16},
@@ -215,68 +280,12 @@ function updateHariBesar(){
     let s=Math.ceil((t-now)/86400000)
     if(s<sel){sel=s;dekat=h}
   })
-  hariBesarText.textContent=`Menuju ${dekat.n} — ${sel} hari lagi`
+  hariBesarText.textContent=`${dekat.n} — ${sel} hari lagi`
 }
 updateHariBesar()
 
 
-/* JADWAL SHOLAT + COUNTDOWN */
-let jadwal=null
-let sudahAdzan={Subuh:false,Zuhur:false,Asar:false,Maghrib:false,Isya:false}
-const lokasiId=1203
 
-fetch(`https://api.myquran.com/v2/sholat/jadwal/${lokasiId}/${new Date().toISOString().slice(0,10).replace(/-/g,'/')}`)
-.then(r=>r.json())
-.then(j=>{
-  jadwal=j.data.jadwal
-  jadwalTable.querySelector("tbody").innerHTML=
-  `<tr>
-    <td>${jadwal.imsak}</td>
-    <td>${jadwal.subuh}</td>
-    <td>${jadwal.dzuhur}</td>
-    <td>${jadwal.ashar}</td>
-    <td>${jadwal.maghrib}</td>
-    <td>${jadwal.isya}</td>
-  </tr>`
-})
-
-setInterval(()=>{
-  if(!jadwal) return
-  const now=new Date()
-  const today=new Date(now.getFullYear(),now.getMonth(),now.getDate())
-
-  const list=[
-    {n:"Subuh",t:jadwal.subuh},
-    {n:"Zuhur",t:jadwal.dzuhur},
-    {n:"Asar",t:jadwal.ashar},
-    {n:"Maghrib",t:jadwal.maghrib},
-    {n:"Isya",t:jadwal.isya}
-  ]
-
-  let next=null
-  list.forEach(j=>{
-    const [h,m]=j.t.split(":")
-    const d=new Date(today.getFullYear(),today.getMonth(),today.getDate(),h,m)
-    if(d>now && !next) next={...j,d}
-  })
-
-  if(!next){
-    countdown.textContent="Semua sholat hari ini telah selesai"
-    return
-  }
-  const diff=next.d-now
-  const h=Math.floor(diff/3600000)
-  const m=Math.floor((diff%3600000)/60000)
-  const s=Math.floor((diff%60000)/1000)
-
-  countdown.textContent=`MENUJU SHOLAT ${next.n.toUpperCase()} : ${h}j ${m}m ${s}d`
-
-  const nowHM=`${String(now.getHours()).padStart(2,0)}:${String(now.getMinutes()).padStart(2,0)}`
-  if(nowHM===next.t && !sudahAdzan[next.n]){
-    adzanAudio.play()
-    sudahAdzan[next.n]=true
-  }
-},1000)
 
 /* BACKGROUND SLIDE */
 const bg=["tambun.jpg","masjid2.jpg"]
@@ -286,6 +295,5 @@ setInterval(()=>{
   i=(i+1)%bg.length
 },15000)
 </script>
-
 </body>
 </html>
