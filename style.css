@@ -27,18 +27,15 @@ body {
 }
 
 .jadwal {
-  margin-top: 20px;          
+  margin-top: auto;          /* INI KUNCINYA */
   display: flex;
+  flex-direction: row;       /* 1 row */
   gap: 15px;
-  padding: 0 15px;
-  box-sizing: border-box;
 }
 
 .box {
-  flex: 1;
+  flex: 1;               /* semua box sama lebar */
   text-align: center;
-  padding: 15px 5px;
-  border-radius: 6px;
 }
 
 .box span {
@@ -66,4 +63,5 @@ body {
   text-align: center;
   font-size: 22px;
 }
+
 
