@@ -12,14 +12,18 @@ body {
 
 
 /* ================= JADWAL SHOLAT ================= */
-.footer-text {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  background: #222;
-  color: white;
-  text-align: center;
-  padding: 10px;
+.countdown{
+  position:absolute;           /* overlay */
+  bottom:120px;                /* SESUAIKAN jarak ke box imsak */
+  left:10px;                  /* sejajar kanan */
+  background:rgba(0,0,0,.55);
+  padding:10px 14px;
+  border-radius:12px;
+  font-size:1.1rem;
+  font-weight:600;
+  color:#ff4d4d;
+  text-align:right;
+  max-width:500px;
 }
 
 .jadwal {
@@ -62,3 +66,4 @@ body {
   text-align: center;
   font-size: 22px;
 }
+
