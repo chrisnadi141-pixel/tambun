@@ -63,5 +63,14 @@ body {
   text-align: center;
   font-size: 22px;
 }
+.footer-text {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: #222;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
 
 
