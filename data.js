@@ -66,8 +66,12 @@ setInterval(() => {
   const s = Math.floor((diff % 60000) / 1000)
 
   countdown.innerHTML =
-  `<span style="color:red;font-weight:bold;">MENUJU SHOLAT ${next.n.toUpperCase()}</span>
-   : ${h}j ${m}m ${s}d`
+  `<span style="color:white;font-weight:bold;">
+     MENUJU ${next.n.toUpperCase()}
+   </span>
+   : <span style="color:red;">
+     ${h}j ${m}m ${s}d
+   </span>`;
 
   const nowHM =
   `${String(now.getHours()).padStart(2,0)}:${String(now.getMinutes()).padStart(2,0)}`
@@ -78,5 +82,6 @@ setInterval(() => {
   }
 
 }, 1000)
+
 
 
