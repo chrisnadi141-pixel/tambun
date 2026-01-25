@@ -14,7 +14,7 @@ body {
 /* ================= JADWAL SHOLAT ================= */
 .countdown{
   position:absolute;           /* overlay */
-  bottom:80px;                /* SESUAIKAN jarak ke box imsak */
+  bottom:120px;                /* SESUAIKAN jarak ke box imsak */
   left:10px;                  /* sejajar kanan */
   background:rgba(0,0,0,.55);
   padding:10px 14px;
@@ -94,6 +94,7 @@ body {
   text-align: center;
   padding: 10px;
 }
+
 
 
 
