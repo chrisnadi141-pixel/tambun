@@ -4,7 +4,7 @@ body {
   font-family: Arial, Helvetica, sans-serif;
   background: url("masjid2.jpg") no-repeat center center fixed;
   background-size: cover;
-  color: white;
+  color: black;
 }
 
 /* ================= HEADER ================= */
@@ -94,6 +94,7 @@ body {
   text-align: center;
   padding: 10px;
 }
+
 
 
 
